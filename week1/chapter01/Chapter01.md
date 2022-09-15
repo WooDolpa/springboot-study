@@ -28,7 +28,7 @@
 +  스프링 부트를 실행할때 별도의 banner.txt 없으면 스프링에 제공하는 기본 배너가 출력된다.
 ![springBootDefaultBanner.png](./img/springBoot_default_banner.png)
 
-+ resources 폴더 하위에 banner.txt 파일 추가
++ resources 폴더 하위에 banner.txt 파일 추가 <br>
 ![banner_location.png](./img/banner_location.png)
 ![banner_txt.png](./img/banner_txt.png)
 ![banner_output.png](./img/banner_output.png)
