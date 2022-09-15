@@ -54,4 +54,32 @@
  #### --> Junit
 + 자바 프로그래밍 언어용 유닛 테스트 프레임워크
 
+### ✅ 테스트 환경에서 Lombok 적용하기
+![gradle.png](./img/gradle.png)
+![test_code.png](./img/test_code.png)
+![test_code_result.png](./img/test_code_result.png)
 
+### ✅ 간단한 컨트롤러 실습 - RESTful API 
+
+#### RESTful API 란 ??
++ 두 컴퓨터 시스템이 인터넷을 통해 정보를 안전하게 교환하기 위해 사용하는 인터페이스
++ 애플리케이션 프로그래밍 인터페이스(API)는 다른 소프트웨어 시스템과 통신하기 위해 따라야 하는 규칙을 정의함
+
+#### RESTful API 이점
++ 확장성
+  + REST API 를 구현하는 시스템은 REST 가 클라이언트 - 서버 상호 작용을 최적화하기 때문에 효울적으로 크기 조정할 수 있음
++ 유연성
+  + RESTful 웹 서비스는 완전한 클라이언트 - 서버 분리를 지원 각 부분이 독립적으로 발전할 수 있도록 다양한 서버 구성 요소를 단순화하고 분리하여 유연성을 향상 시킴
++ 독립성
+  + API 설계에 영향을 주지 않고 다양한 프로그래밍 언어로 클라이언트 및 서버 애플리케이션 작성이 가능함
+
+#### @RestController
++ 스프링프레임워크 4.x 버전 이상부터 사용이 가능한 어노테이션이며 @Controller @ResponseBody 가 결합된 어노테이션
++ @ResponseBody 어노테이션을 붙이지 않아도 문자열과 Json 등을 전송할 수 있음
+
+#### GetMapping
++ HTTP GET 요청을 특정 핸들러 메소드에 맵핑하기 위한 어노테이션
+
+### ✅ 스프링 부트 애플리케이션 Jar 파일 만들기
++ tasks > build > bootJar 를 실행하여 Jar 파일이 생성됨
++ java -jar [파일명] 명령어를 실행하여 애플리케이션 실행  
