@@ -14,5 +14,6 @@
   + https://tonyspark.notion.site/0d54a708ce1b4442b215313813f80cac
 + 9월 17일 : 
   + [1장](./week1/chapter01/Chapter01.md) 
-    
+  + [2장]()
+  + [3장](./week1/chapter03/Chapter03.md)
   
