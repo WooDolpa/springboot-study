@@ -131,3 +131,33 @@ th:if ~ unless 사용 삼항연산자 스타일을 사용할 수 있음
         <a th:href="@{/sample/exView/{sno}(sno=${dto.sno})}">[[${dto}]]</a>
     </li>
 ```
+
+#### thymeleaf의 기본 객체와 LocalDateTime
++ thymeleaf에는 내부적으로 여러 종류의 기본 객체라는 것을 지원
++ 기본 객체는 문자나 숫자, 웹에서 사용되는 파라미터, request, response, session 등 다양한 객체를 사용해 편하게 코드작성을 할수 있음
++ #numbers 나 #dates 등을 별도의 설정 없이 사용함
+``` html
+    <li th:each="dto : ${list}">
+        [[${#numbers.formatInteger(dto.sno, 5)}]]
+    </li>
+```
+#### --> sno를 모두 5자리를 만듬
+
+```
+Java 8버전부터 등장한 LocalDate 타입이나 LocalDateTime에 대해서 상당히 복잡한 방식으로 처리해야함
+좀 더 편리하게 처리하기 위해 오픈소스 추가
+```
+``` 
+implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
+```
+``` html
+    <ul>
+        <li th:each="dto : ${list}">
+            [[${dto.sno}]] --- [[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]
+        </li>
+    </ul>
+```
+
+#### thymeleaf의 레이아웃
+--> thymeleaf의 레이아웃 기능은 크게 2가지 형태로 사용함
+
