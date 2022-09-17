@@ -160,4 +160,225 @@ implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
 
 #### thymeleaf의 레이아웃
 --> thymeleaf의 레이아웃 기능은 크게 2가지 형태로 사용함
++ JSP의 include와 같이 특정 부분을 외부 혹은 내부에서 가져와서 포함하는 형태
++ 특정한 부분을 파라미터로 전달해서 내용에 포함하는 형태
 
+#### include 방식 처리
+```
+thymeleaf 기능 중에서는 특정한 부분을 다른 내용으로 변경할 수 있는 th:insert나 th:replace 기능이 있음
+th:include 는 3버전부터 사용 불가능 
+th:replace --> 기존의 내용을 완전히 대체하는 방식이고
+th:insert --> 기존 내용의 바깥쪽 태그는 그대로 유지하면서 추가되는 방식
+```
+``` html
+<!-- fragment1.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div th:fragment="part1">
+    <h2>Part 1</h2>
+  </div>
+  <div th:fragment="part2">
+    <h2>Part 2</h2>
+  </div>
+  <div th:fragment="part3">
+    <h2>Part 3</h2>
+  </div>
+</body>
+</html>
+
+<!-- exLayout1.html-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <h1>Fragment Test</h1>
+
+  <h1>Layout 1 - 1</h1>
+  <div th:replace="~{/fragments/fragment1 :: part1}"></div>
+
+  <h1>Layout 1 - 2</h1>
+  <div th:insert="~{/fragments/fragment1 :: part2}"></div>
+
+  <h1>Layout 1 - 3</h1>
+  <th:block th:replace="~{/fragments/fragment1 :: part3}"></th:block>
+
+</body>
+</html>
+```
+```
+th:insert 이용하는 경우 <div> 태그 내에 다시 <div> 태그가 생성됨
+th:replace 이용할때 '::' 뒤에는 fragment의 이름을 지정하거나 css의 '#id' 같은 선택자를 이용할 수 있음
+```
+#### 파일 전체 적용 시
+``` html
+<!-- fragment2.html -->
+<div>
+  <hr/>
+  <h2>Fragment2 File</h2>
+  <h2>Fragment2 File</h2>
+  <h2>Fragment2 File</h2>
+  <hr/>
+</div>
+
+<!-- exLayout1.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <h1>Fragment Test</h1>
+  <div style="border: 1px solid blue">
+      <th:block th:replace="~{/fragments/fragment2}"></th:block>
+  </div>
+
+  <h1>Layout 1 - 1</h1>
+  <div th:replace="~{/fragments/fragment1 :: part1}"></div>
+
+  <h1>Layout 1 - 2</h1>
+  <div th:insert="~{/fragments/fragment1 :: part2}"></div>
+
+  <h1>Layout 1 - 3</h1>
+  <th:block th:replace="~{/fragments/fragment1 :: part3}"></th:block>
+
+</body>
+</html>
+```
+#### '::' 제거하면 파일 전체가 적용됨
+
+#### 파라미터 방식의 처리
+``` html
+<!-- fragment3.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div th:fragment="target(first, second)">
+
+    <style>
+      .c1 {
+        background-color: red;
+      }
+      .c2 {
+        background-color: blue;
+      }
+    </style>
+
+    <div class="c1">
+      <th:block th:replace="${first}"></th:block>
+    </div>
+
+    <div class="c2">
+      <th:block th:replace="${second}"></th:block>
+    </div>
+
+  </div>
+</body>
+</html>
+
+<!-- exLayout2.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/fragments/fragment3:: target(~{this:: #ulFirst}, ~{this::#ulSecond} )}">
+
+  <ul id="ulFirst">
+    <li>AAA</li>
+    <li>BBB</li>
+    <li>CCC</li>
+  </ul>
+
+  <ul id="ulSecond">
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+  </ul>
+
+</th:block>
+```
+```
+fragment3.html 
+선언된 target 부분은 first 와 second 파라미터 받을 수 있도록 구성
+
+exLayout2.html 
+th:replace를 통해 fragment3 로 대체되면서 해당 id 값을 파라미터로 넘기면서 화면을 그림
+this는 현재 페이지를 의미하는데 생략 가능
+```
+
+#### 레이아웃 템플릿
+```html
+<!-- layout1.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:ht="http://www.thymeleaf.org">
+
+<ht:block th:replace="~{/layout/layout1 :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <h1>exTemplate Page</h1>
+    </th:block>
+</ht:block>
+
+<!-- exTemplate.html -->
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            width: 100vw;
+            height: 20vh;
+            background-color: aqua;
+        }
+        .content {
+            width: 100vw;
+            height: 70vh;
+            background-color: lightgray;
+        }
+        .footer {
+            width: 100vw;
+            height: 10vh;
+            background-color: green;
+        }
+    </style>
+
+    <div class="header">
+        <h1>HEADER</h1>
+    </div>
+    <div class="content">
+        <th:block th:replace="${content}"></th:block>
+    </div>
+    <div class="footer">
+        <h1>FOOTER</h1>
+    </div>
+
+    </body>
+</th:block>
+</html>
+```
+```
+content div 영역에 layout1 --> content fragment 로 대체됨
+```
+
+#### 부트스트랩 템플릿 적용은 책 참조...!!!
