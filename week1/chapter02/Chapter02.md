@@ -15,6 +15,12 @@ Spring Data JPA 라이브러리가 추가되었기 때문에 자동으로 이에
 
 ###  ✅ Spring Data JPA 소개
 + JPA(Java Persistence API)는 자바 언어를 통해서 데이터베이스와 같은 영속 계층을 처리하고자 하는 스펙
-+ JPA를 이해하기 위해서는 ORM(Object-Relational-Mapping)을 알아야한다.
++ JPA를 이해하기 위해서는 ORM을 알아야한다.
 
-###  ✅ ORM과 JPA
+###  ✅ ORM(Object-Relational-Mapping)
+```
+이름 그대로 객체와 관계형 데이터베이스를 매핑한다는 뜻
+ORM 프레임워크는 객체와 테이블을 매핑해서 패러다임의 불일치 문제를 개발자 대신 해결
+ORM 프레임워크를 사용하면 객체를 DB에 저장할때 Insert SQL을 직접 작성하는게 아니라 
+객체를 마치 자바 컬렉션에 저장하듯이 ORM 프레임워크에 저장하면 된다.
+```
