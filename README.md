@@ -12,8 +12,8 @@
 ## 🔥 스터디 진행
 + 9월 8일 킥오프
   + https://tonyspark.notion.site/0d54a708ce1b4442b215313813f80cac
-+ 9월 17일 : 
-  + [1장](./week1/chapter01/Chapter01.md) 
-  + [2장](./week1/chapter02/Chapter02.md)
-  + [3장](./week1/chapter03/Chapter03.md)
++ 9월 18일 : 
+  + [1장](./week1/chapter01/Chapter01.md) - [예제](https://github.com/WooDolpa/springboot-study)
+  + [2장](./week1/chapter02/Chapter02.md) - [예제](https://github.com/WooDolpa/spring-boot-chapter02)
+  + [3장](./week1/chapter03/Chapter03.md) - [예제](https://github.com/WooDolpa/spring-boot-chapter03)
   
