@@ -16,4 +16,8 @@
   + [1장](./week1/chapter01/Chapter01.md) - [예제](https://github.com/WooDolpa/springboot-study)
   + [2장](./week1/chapter02/Chapter02.md) - [예제](https://github.com/WooDolpa/spring-boot-chapter02)
   + [3장](./week1/chapter03/Chapter03.md) - [예제](https://github.com/WooDolpa/spring-boot-chapter03)
-  
+  + 반장님 자료 : [스프링부트_설계.pdf](./week1/chapter01/file/springBootArchitecture.pdf)
+  ```
+  책에 내용을 정리하고 발표준비를 했지만 생각한 만큼 말이 잘 안나오고 말이 버벅 거렸음..
+  다음에 발표 준비를 하게되면 이부분을 보완해야 겠다....
+  ```
