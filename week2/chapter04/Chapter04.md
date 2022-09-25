@@ -146,7 +146,7 @@ public interface GuestbookRepository extends JpaRepository<Guestbook, Long>, Que
 
 
 ### 🔻 단일 항목 검색테스트 - QueryDSL 동적 검색
-```java
+```
 @Test
 public void queryDSL_테스트1() {
 
@@ -174,7 +174,7 @@ public void queryDSL_테스트1() {
 5. BooleanBuilder는 GuestbookRepository에 추가된 QuerydslPredicateExcutor 인터페이스의 findAll()을 사용
 
 ### 🔻 다중 항목 검색테스트 - QueryDSL 동적 검색
-```java
+```
 @Test
 public void queryDSL_다중항목_테스트2() {
 
@@ -268,5 +268,9 @@ application.properties에 0이 아닌 1부터 페이지 번호를 받을수 있�
 예제에서 사용하지 않는 것은 나중에 검색 조건등과 같이 추가로 전달되어야 데이터가 많을 경우 오히려 더 복잡하게 동작할 여지가 있기 때문이다.
 ```
 
+### 🔻 CURD 예제 관련
+```
+Thymeleaf를 이용하는 경우 검색에 들어가는 공백이나 한글 등의 처리가 편리하다.
+```
 
 
