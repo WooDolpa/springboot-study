@@ -59,3 +59,37 @@
 FK를 사용하는 엔티티가 PK를 가진 엔티티를 참조하는 구조로 설계하면 데이터베이스와 동일한 구조가 되기 때문에 관계를 이해하는 것도 편하고
 자동으로 테이블이 생성될 때도 유용하다.
 
+#### ✅ 5.2.2 @ManyToOne과 Eager/Lazy loading
+@ManyToOne 어노테이션이 선언된 연관관계 주인인 엔티티를 조회할때 PK 쪽 엔티티도 같이 가져온다.
+```
+@Test
+public void 게시글조회테스트_1() {
+    Optional<Board> result = boardRepository.findById(100L);        // 데이터베이스에 존재하는 번호
+    Board board = result.get();
+
+    System.out.println(board);
+    System.out.println(board.getWriter());
+}
+```
+```
+select
+        board0_.bno as bno1_0_0_,
+        board0_.moddate as moddate2_0_0_,
+        board0_.regdate as regdate3_0_0_,
+        board0_.content as content4_0_0_,
+        board0_.title as title5_0_0_,
+        board0_.writer_email as writer_e6_0_0_,
+        member1_.email as email1_1_1_,
+        member1_.moddate as moddate2_1_1_,
+        member1_.regdate as regdate3_1_1_,
+        member1_.name as name4_1_1_,
+        member1_.password as password5_1_1_ 
+    from
+        board board0_ 
+    left outer join
+        member member1_ 
+            on board0_.writer_email=member1_.email 
+    where
+        board0_.bno=?
+```
+위의 테스트 코드를 실행하면 내부적으로 `left outer join` 처리가 된것을 확인할 수 있다.
