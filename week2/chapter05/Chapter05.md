@@ -76,7 +76,7 @@ select
         board0_.bno as bno1_0_0_,
         board0_.moddate as moddate2_0_0_,
         board0_.regdate as regdate3_0_0_,
-        board0_.content as content4_0_0_,
+        board0_.coFntent as content4_0_0_,
         board0_.title as title5_0_0_,
         board0_.writer_email as writer_e6_0_0_,
         member1_.email as email1_1_1_,
@@ -93,3 +93,33 @@ select
         board0_.bno=?
 ```
 위의 테스트 코드를 실행하면 내부적으로 `left outer join` 처리가 된것을 확인할 수 있다.
+
+#### fetch는 Lazy loading을 권장
+위의 쿼리 실행 결과와 같이 특정한 엔티티를 조회할 때 연관관계를 가진 모든 엔티티를 같이 로딩하는 것을 `Eager loading` 즉시로딩이라고 표현함
+`즉시 로딩`은 한 번에 연관관계가 있는 모든 엔티티를 가져온다는 장점이 있지만, 여러 연관관계를 맺고 있거나 연관관계가 복잡할수록 조인으로 인한
+성능 저하를 피할 수 없다. 
+<br> JPA에서 연관관계의 데이터를 어떻게 가져올 것인가를 fetch(패치)라고 하는데 연관관계의 어노테이션의 속성으로 `fetch` 모드를 지정
+<br> `즉시 로딩`은 불필요한 조인까지 처리해야 하는 경우가 많기 때문에 가능하면 사용하지 않고, 그와 반대되는 개념으로 `Lazy loading`으로 `지연 로딩`이라고 표현
+
+#### 연관관계에서는 @ToString()을 주의
+엔티티 간에 연관관계를 지정하는 경우 항상 @ToString()을 주의해야 한다.
+<br> @ToString()은 해당 클래스의 모든 멤버 변수를 출력하게 된다. 예를들어 Board 객체의 @ToString()을 하면 writer 변수로 선언된
+Member 객체 역시 출력해야 한다. Member를 출력하기 위해서는 Member 객체의 toString()이 호출되어야 하고 이때 데이터베이스 연결이 필요하게 된다.
+<br> 이런 문제로 인해 연관관계가 있는 엔티티 클래스의 경우 @ToString()을 할 때는 습관적으로 exclude 속성을 사용하는 것이 좋다.
+<br> exclude는 해당 속성값으로 지정된 변수는 toString()에서 제외하기 때문에 지연 로딩할 때는 반드시 지정하는 것이 좋다.
+
+#### 지연 로딩(lazy loading)의 장/단점
+지연 로딩은 조인을 하지 않기 때문에 단순하게 하나의 테이블을 이용하는 경우에는 빠른 속도의 처리가 가능하다는 장점이 있다.
+<br> 필요한 순간에 쿼리를 실행해야 하기 때문에 연관관계가 복잡한 경우에는 여러 번의 쿼리가 실행된다는 단점이 있다.
+<br> `지연 로딩을 기본으로 사용하고, 상황에 맞게 필요한 방법을 찾는다.`
+
+### ✅ 5.2.3 JPQL과 left(outer) join
+
+#### left(outer)join
+스프링 부트 2버전 이후에 포함되는 JPA 버전은 엔티티 클래스 내에 전혀 연관관계가 없더라도 조인(join)을 이용할 수 있다.
+<br> 조인을 할 때 `INNER JOIN` 혹은 `JOIN`과 같이 일반적인 조인을 이용할 수 있고 `LEFT OUTER JOIN` 혹은 `LEFT JOIN`을 이용할 수 있다.
+
+#### 연관관계가 없는 엔티티 조인 처리에는 on
+Board와 Member 사이에는 내부적으로 참조를 통해서 연관관계가 있지만, Board와 Reply는 좀 상황이 다르다.
+<br> Reply 쪽이 @ManyToOne으로 참조하고 있으나 Board 입장에서는 Reply 객체들을 참조하고 있지 않기 때문에 문제가 된다.
+<br> 이런 경우에는 직접 조인에 필요한 조건을 `on`을 이용해서 작성
